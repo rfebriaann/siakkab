@@ -3,12 +3,12 @@ import Image from "next/image";
 import { forwardRef } from "react";
 
 const Jumbotorn = forwardRef((props, ref) => {
-  const { istana, masjid, jembatan, balai, tanjak, pintukiri, pintukanan } =
+  const { istana, masjid, jembatan, balai, tanjak, pintu, pintukiri, pintukanan } =
     props;
 
   return (
     <div
-      className="relative min-h-screen overflow-hidden"
+      className="relative min-h-screen overflow-hidden bg-white"
       style={{
         backgroundImage: "url('/image/bg.png')",
         backgroundSize: "cover",
@@ -19,13 +19,38 @@ const Jumbotorn = forwardRef((props, ref) => {
       {/* Istana utama */}
       <img
         ref={istana}
-        src="/image/istana3d2.png"
+        src="/image/istana3d3.png"
         alt="istana"
         className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20"
         style={{ transformOrigin: "center bottom" }}
       />
-
-      {/* Gambar lainnya */}
+      <img
+          ref={pintukiri}
+          src="/image/pintukiri.svg"
+          className="absolute -bottom-4 left-1/2 -translate-x-[115%] z-40"
+          width={48}
+          height={48}
+          alt="Pintu"
+          style={{ transformOrigin: "center bottom" }}
+      />
+      <img
+          ref={pintukanan}
+          src="/image/pintukanan.svg"
+          className="absolute -bottom-4 left-1/2 -translate-x-[20%] z-40"
+          width={48}
+          height={48}
+          alt="Pintu"
+          style={{ transformOrigin: "center bottom" }}
+      />
+      <img
+          ref={pintu}
+          src="/image/pintukuning.svg"
+          className="absolute -bottom-2 left-1/2 -translate-x-[57%] z-30"
+          width={86}
+          height={86}
+          alt="Pintu"
+          style={{ transformOrigin: "center bottom" }}
+      />
       <img
         ref={masjid}
         className="absolute z-10 scale-75 -left-24 top-7"
