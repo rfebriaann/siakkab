@@ -7,6 +7,19 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        'gradient-x': 'gradient-x 15s ease infinite',
+      },
+      keyframes: {
+        'gradient-x': {
+          '0%, 100%': {
+            'background-position': '0% 50%',
+          },
+          '50%': {
+            'background-position': '100% 50%',
+          },
+        },
+      },
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
@@ -15,6 +28,7 @@ module.exports = {
         figtree: ["Figtree", "sans-serif"],
         kyiv: ["var(--font-kyiv), sans-serif"],
         marck: ["Marck Script, serif"],
+        Spartam: ["League Spartan, serif"],
         // Add more custom font families as needed
       },
     },
