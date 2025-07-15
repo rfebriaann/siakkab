@@ -29,6 +29,7 @@ module.exports = {
         kyiv: ["var(--font-kyiv), sans-serif"],
         marck: ["Marck Script, serif"],
         Spartam: ["League Spartan, serif"],
+        funnel: ["Funnel Display, serif"],
         // Add more custom font families as needed
       },
     },

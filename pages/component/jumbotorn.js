@@ -19,7 +19,7 @@ const Jumbotorn = forwardRef((props, ref) => {
       {/* Istana utama */}
       <img
         ref={istana}
-        src="/image/istana3d3.png"
+        src="/image/istana3.png"
         alt="istana"
         className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20"
         style={{ transformOrigin: "center bottom" }}
@@ -44,7 +44,7 @@ const Jumbotorn = forwardRef((props, ref) => {
       />
       <img
           ref={pintu}
-          src="/image/pintukuning.svg"
+          src="/image/pintuputih.svg"
           className="absolute -bottom-2 left-1/2 -translate-x-[57%] z-30"
           width={86}
           height={86}

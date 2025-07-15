@@ -20,6 +20,7 @@ export default function Home() {
   const pintu = useRef(null);
   const pintukiri = useRef(null);
   const pintukanan = useRef(null);
+  const title1section = useRef(null);
 
   useEffect(() => {
     const smoother = ScrollSmoother.create({
@@ -83,14 +84,14 @@ export default function Home() {
 
     zoomTimeline.to(pintukiri.current, {
       // rotateX: 90,
-      x: -90,
+      x: -95,
       opacity: 1,
       duration: 1.5,
       ease: "power2.inOut",
     });
     zoomTimeline.to(pintukanan.current, {
       // rotateX: 90,
-      x: 39,
+      x: 37,
       opacity: 1,
       duration: 1.5,
       ease: "power2.inOut",
@@ -98,7 +99,7 @@ export default function Home() {
 
     // 2️⃣ Setelah itu, baru istana zoom
     zoomTimeline.to(istana.current, {
-      scale: 30,
+      scale: 20,
       // opacity: 0,
       ease: "power2.inOut",
     });
@@ -109,15 +110,15 @@ export default function Home() {
     },"<");
     
     zoomTimeline.to(pintukiri.current, {
-      scale: 40,
+      scale: 28,
       x: -920,
       y: 12,
       opacity: 1,
       ease: "power2.inOut",
     }, "<");
     zoomTimeline.to(pintukanan.current, {
-      scale: 40,
-      x: 939,
+      scale: 28,
+      x: 829,
       y: 12,
       opacity: 1,
       ease: "power2.inOut",
@@ -127,11 +128,11 @@ export default function Home() {
     zoomTimeline.to(
       pintu.current,
       {
-        scale: 30,
+        scale: 22,
         y: 12,
         ease: "power2.inOut",
       },
-      "<"
+      "<="
     );
 
     // 5️⃣ Section baru muncul
@@ -184,8 +185,9 @@ export default function Home() {
     })
     .to(cards, {
       x: (i) => [-450, 0, 450, -650, 500][i],
-      y: (i) => [-350, -100, -400, 150, 80][i],
-      scale: 1,
+      y: (i) => [-350, 200, -400, 150, 80][i],
+      scale: () => gsap.utils.random(0.5, 1.2),
+      // scale: 1,
       rotate: 0,
       stagger: 0.2,
       ease: "power2.out",
@@ -261,10 +263,12 @@ export default function Home() {
         <section
           ref={nextSection}
           className="guided-section overflow-hidden relative py-10 px-20 min-h-screen flex flex-col items-start justify-between 
-          bg-[radial-gradient(ellipse_at_top,_#F79E00_10%,_#F79E00_80%,_#FFB331_20%,_#CC8201_100%)]
+          bg-[#FFFFFF]
         text-white leading-none z-10 -mt-2"
         >
-          {/* <h2 className="z-10 relative text-3xl">Guided by creative experts</h2> */}
+          <h2 ref={title1section} className="absolute inset-0 flex items-center justify-center z-10 font-funnel text-5xl text-black text-center">
+            Cerita-cerita dari Negeri Istana
+          </h2>
           <div className="cards-wrapper absolute inset-0 flex items-end justify-center pointer-events-none">
             <div className="cards-wrapper absolute inset-0 flex items-end justify-center pointer-events-none">
               {[1, 2, 3, 4, 5].map((i) => (
@@ -282,7 +286,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="h-screen w-full animate-gradient-x bg-gradient-to-r from-[#F79E00] via-[#b97501] to-[#ffb73a] bg-[length:400%_400%] flex items-center justify-center text-white text-center">
+        <section className="h-screen w-full bg-[#FFFFFF] flex items-center justify-center text-white text-center">
           📜 About Us
         </section>
       </div>
