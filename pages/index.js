@@ -67,7 +67,7 @@ export default function Home() {
         end: "bottom center",
         scrub: true,
         markers: false,
-      }
+      },
     });
     // zoomTimeline.to(jumbo.current, {
     //   y: -100,
@@ -75,11 +75,11 @@ export default function Home() {
     //   ease: "power1.inOut",
     // });
     gsap.set(pintukiri.current, {
-      transformOrigin: "right center"
+      transformOrigin: "right center",
     });
 
     gsap.set(pintukanan.current, {
-      transformOrigin: "left center"
+      transformOrigin: "left center",
     });
 
     zoomTimeline.to(pintukiri.current, {
@@ -89,13 +89,17 @@ export default function Home() {
       duration: 1.5,
       ease: "power2.inOut",
     });
-    zoomTimeline.to(pintukanan.current, {
-      // rotateX: 90,
-      x: 37,
-      opacity: 1,
-      duration: 1.5,
-      ease: "power2.inOut",
-    }, "<");
+    zoomTimeline.to(
+      pintukanan.current,
+      {
+        // rotateX: 90,
+        x: 37,
+        opacity: 1,
+        duration: 1.5,
+        ease: "power2.inOut",
+      },
+      "<"
+    );
 
     // 2️⃣ Setelah itu, baru istana zoom
     zoomTimeline.to(istana.current, {
@@ -103,26 +107,38 @@ export default function Home() {
       // opacity: 0,
       ease: "power2.inOut",
     });
-    
-    zoomTimeline.to([masjid.current, jembatan.current, balai.current, tanjak.current], {
-      opacity: 0,
-      ease: "power2.inOut",
-    },"<");
-    
-    zoomTimeline.to(pintukiri.current, {
-      scale: 28,
-      x: -920,
-      y: 12,
-      opacity: 1,
-      ease: "power2.inOut",
-    }, "<");
-    zoomTimeline.to(pintukanan.current, {
-      scale: 28,
-      x: 829,
-      y: 12,
-      opacity: 1,
-      ease: "power2.inOut",
-    }, "<");
+
+    zoomTimeline.to(
+      [masjid.current, jembatan.current, balai.current, tanjak.current],
+      {
+        opacity: 0,
+        ease: "power2.inOut",
+      },
+      "<"
+    );
+
+    zoomTimeline.to(
+      pintukiri.current,
+      {
+        scale: 28,
+        x: -920,
+        y: 12,
+        opacity: 1,
+        ease: "power2.inOut",
+      },
+      "<"
+    );
+    zoomTimeline.to(
+      pintukanan.current,
+      {
+        scale: 28,
+        x: 829,
+        y: 12,
+        opacity: 1,
+        ease: "power2.inOut",
+      },
+      "<"
+    );
 
     // Zoom pintu depan BERSAMAAN
     zoomTimeline.to(
@@ -154,7 +170,7 @@ export default function Home() {
         y: (cards.length - i) * 50,
         scale: 0.9 + i * 0.03,
         zIndex: i,
-      }); 
+      });
     });
 
     gsap.to(cards, {
@@ -164,7 +180,7 @@ export default function Home() {
       ease: "power2.out",
       scrollTrigger: {
         trigger: ".guided-section",
-        start: "top center",     // ❗ sebelum masuk layar
+        start: "top center", // ❗ sebelum masuk layar
         end: "+=400vh",
         scrub: 1,
         markers: true,
@@ -172,32 +188,83 @@ export default function Home() {
     });
 
     // 2️⃣ Spread - Saat masuk layar penuh
-    
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: ".guided-section",
-        start: "top top",
-        end: "+=1500",
-        scrub: 2,
-        pin: true,
-        markers: true,
-      },
-    })
-    .to(cards, {
-      x: (i) => [-450, 0, 450, -650, 500][i],
-      y: (i) => [-350, 200, -400, 150, 80][i],
-      scale: () => gsap.utils.random(0.5, 1.2),
-      // scale: 1,
-      rotate: 0,
-      stagger: 0.2,
-      ease: "power2.out",
-    })
-    .to(cards, {
-      y: "-=300",        // naik 300px
-      opacity: 0,        // fade out
-      stagger: 0.2,      // satu per satu
-      ease: "power2.inOut",
-    }, "+=0.5");  
+
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: ".guided-section",
+          start: "top top",
+          end: "+=1500",
+          scrub: 2,
+          pin: true,
+          markers: true,
+        },
+      })
+      .to(cards, {
+        x: (i) => [-450, 0, 450, -650, 500][i],
+        y: (i) => [-350, 200, -400, 150, 80][i],
+        scale: () => gsap.utils.random(0.5, 1.2),
+        // scale: 1,
+        rotate: 0,
+        stagger: 0.2,
+        ease: "power2.out",
+      })
+      .to(
+        cards,
+        {
+          y: "-=300", // naik 300px
+          opacity: 0, // fade out
+          stagger: 0.2, // satu per satu
+          ease: "power2.inOut",
+        },
+        "+=0.5"
+      )
+      .fromTo(
+        ".transition-image",
+        {
+          width: 0,
+          height: 0,
+          opacity: 1,
+          top: "50%",
+          left: "50%",
+          xPercent: -50,
+          yPercent: -50,
+        },
+        {
+          width: "100vw",
+          height: "100vh",
+          opacity: 1,
+          xPercent: -50,
+          yPercent: -50,
+          borderRadius: 0,
+          duration: 2,
+          ease: "power2.inOut",
+        }
+      )
+
+      .to(
+        title1section.current,
+        {
+          y: "-=300",
+          opacity: 0,
+          duration: 1,
+          ease: "power2.out",
+        },
+        "<"
+      ) // teks juga menghilang
+      .fromTo(
+        ".inside-content",
+        {
+          clipPath: "inset(0 100% 0 0)", // tertutup dari kanan
+          opacity: 0,
+        },
+        {
+          clipPath: "inset(0 0% 0 0)", // buka dari kiri ke kanan
+          opacity: 1,
+          duration: 1.5,
+          ease: "power2.out",
+        }
+      );
 
     return () => {
       smoother.kill();
@@ -262,30 +329,51 @@ export default function Home() {
         </section> */}
         <section
           ref={nextSection}
-          className="guided-section overflow-hidden relative py-10 px-20 min-h-screen flex flex-col items-start justify-between 
-          bg-[#FFFFFF]
-        text-white leading-none z-10 -mt-2"
+          className="guided-section w-screen h-screen overflow-hidden relative py-10 px-20 min-h-screen flex flex-col items-start justify-between 
+        bg-[#FFFFFF] text-white leading-none z-10 -mt-2"
         >
-          <h2 ref={title1section} className="absolute inset-0 flex items-center justify-center z-10 font-funnel text-5xl text-black text-center">
+          <h2
+            ref={title1section}
+            className="absolute inset-0 flex items-center justify-center z-10 font-funnel text-5xl text-black text-center"
+          >
             Cerita-cerita dari Negeri Istana
           </h2>
-          <div className="cards-wrapper absolute inset-0 flex items-end justify-center pointer-events-none">
-            <div className="cards-wrapper absolute inset-0 flex items-end justify-center pointer-events-none">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <div
-                  key={i}
-                  className="card bg-white w-[250px] h-[350px] shadow-lg rounded-sm absolute overflow-hidden flex items-center justify-center"
-                >
-                  <img
-                    src={`/image/wpp/bg${i}.jpg`}
-                    alt={`Gambar ${i}`}
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-              ))}
+
+          {/* Kartu */}
+          <div className="cards-wrapper absolute inset-0 flex items-end justify-center pointer-events-none z-10">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div
+                key={i}
+                className="card bg-white w-[250px] h-[350px] shadow-lg rounded-sm absolute overflow-hidden flex items-center justify-center"
+              >
+                <img
+                  src={`/image/wpp/bg${i}.jpg`}
+                  alt={`Gambar ${i}`}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            ))}
+          </div>
+
+          <div className="image-transition absolute inset-0 flex items-center justify-center z-0">
+            {/* <img
+              src="/image/jembatan.jpg"
+              alt="Transition"
+              className="transition-image absolute top-1/2 left-1/2 w-0 h-0 opacity-0 object-cover"
+            /> */}
+
+            <div className="inside-wrapper absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none">
+              <div className="inside-content opacity-0">
+                <h1 className="font-funnel text-5xl text-black text-center">
+                  Layanan publik juga bagian dari cerita kami—tentang bagaimana
+                  Siak terus berkembang, sambil tetap memudahkan warganya setiap
+                  hari.
+                </h1>
+              </div>
             </div>
           </div>
         </section>
+
         <section className="h-screen w-full bg-[#FFFFFF] flex items-center justify-center text-white text-center">
           📜 About Us
         </section>
