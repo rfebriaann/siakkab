@@ -3,8 +3,16 @@ import Image from "next/image";
 import { forwardRef } from "react";
 
 const Jumbotorn = forwardRef((props, ref) => {
-  const { istana, masjid, jembatan, balai, tanjak, pintu, pintukiri, pintukanan } =
-    props;
+  const {
+    istana,
+    masjid,
+    jembatan,
+    balai,
+    tanjak,
+    pintu,
+    pintukiri,
+    pintukanan,
+  } = props;
 
   return (
     <div
@@ -25,31 +33,31 @@ const Jumbotorn = forwardRef((props, ref) => {
         style={{ transformOrigin: "center bottom" }}
       />
       <img
-          ref={pintukiri}
-          src="/image/pintukiri.svg"
-          className="absolute -bottom-4 left-1/2 -translate-x-[115%] z-40"
-          width={48}
-          height={48}
-          alt="Pintu"
-          style={{ transformOrigin: "center bottom" }}
+        ref={pintukiri}
+        src="/image/pintukiri.svg"
+        className="absolute -bottom-4 left-1/2 -translate-x-[115%] z-40"
+        width={48}
+        height={48}
+        alt="Pintu"
+        style={{ transformOrigin: "center bottom" }}
       />
       <img
-          ref={pintukanan}
-          src="/image/pintukanan.svg"
-          className="absolute -bottom-4 left-1/2 -translate-x-[20%] z-40"
-          width={48}
-          height={48}
-          alt="Pintu"
-          style={{ transformOrigin: "center bottom" }}
+        ref={pintukanan}
+        src="/image/pintukanan.svg"
+        className="absolute -bottom-4 left-1/2 -translate-x-[20%] z-40"
+        width={48}
+        height={48}
+        alt="Pintu"
+        style={{ transformOrigin: "center bottom" }}
       />
       <img
-          ref={pintu}
-          src="/image/pintuputih.svg"
-          className="absolute -bottom-2 left-1/2 -translate-x-[57%] z-30"
-          width={86}
-          height={86}
-          alt="Pintu"
-          style={{ transformOrigin: "center bottom" }}
+        ref={pintu}
+        src="/image/pintuputih.svg"
+        className="absolute -bottom-2 left-1/2 -translate-x-[57%] z-30"
+        width={86}
+        height={86}
+        alt="Pintu"
+        style={{ transformOrigin: "center bottom" }}
       />
       <img
         ref={masjid}
