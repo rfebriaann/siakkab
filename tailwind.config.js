@@ -28,8 +28,9 @@ module.exports = {
         figtree: ["Figtree", "sans-serif"],
         kyiv: ["var(--font-kyiv), sans-serif"],
         marck: ["Marck Script, serif"],
-        Spartam: ["League Spartan, serif"],
-        funnel: ["Funnel Display, serif"],
+        Spartam: ["League Spartan", "serif"],
+        funnel: ["Funnel Display", "serif"],
+        Rammetto: ["Rammetto One", "sans-serif"],
         // Add more custom font families as needed
       },
     },

@@ -3,20 +3,29 @@ import Image from "next/image";
 import { forwardRef } from "react";
 
 const Jumbotorn = forwardRef((props, ref) => {
-  const { istana, masjid, jembatan, balai, tanjak, pintu, pintukiri, pintukanan } =
+  const { istana, masjid, jembatan, balai, tanjak, pintu, pintukiri, pintukanan, awan } =
     props;
 
   return (
     <div
       className="relative min-h-screen overflow-hidden bg-white"
-      style={{
-        backgroundImage: "url('/image/bg.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        perspective: "1000px", // penting untuk rotateY
-      }}
-    >
+        style={{
+          backgroundImage: "url('/image/bg.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          perspective: "1000px", 
+        }}
+      >
       {/* Istana utama */}
+      <img
+          ref={awan}
+          src="/image/awan.webp"
+          className="absolute -bottom-60 left-1/2 -translate-x-[27%] z-50  mix-blend-screen hidden"
+          width={1200}
+          height={1200}
+          alt="awan"
+          style={{ transformOrigin: "center bottom" }}
+      />
       <img
         ref={istana}
         src="/image/istana3.png"

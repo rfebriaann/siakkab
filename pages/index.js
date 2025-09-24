@@ -21,6 +21,7 @@ export default function Home() {
   const pintukiri = useRef(null);
   const pintukanan = useRef(null);
   const title1section = useRef(null);
+  const awan = useRef(null);
 
   useEffect(() => {
     const smoother = ScrollSmoother.create({
@@ -41,10 +42,78 @@ export default function Home() {
       },
     });
 
-    // gsap.set(pintuhitam.current, {
-    //   transformOrigin: "bottom center",
-    //   perspective: 1200,
-    // });
+    // Random Text Animation Function
+    const animateRandomText = () => {
+      const textElement = title1section.current;
+      if (!textElement) return;
+
+      const text = "Cerita-cerita dari Negeri Istana";
+      
+      // Split text into individual characters
+      const chars = text.split('').map((char, index) => {
+        if (char === ' ') {
+          return '<span class="animated-char" data-char="' + index + '">&nbsp;</span>';
+        }
+        return '<span class="animated-char" data-char="' + index + '">' + char + '</span>';
+      });
+
+      // Set the HTML with wrapped characters
+      textElement.innerHTML = chars.join('');
+
+      // Get all character spans
+      const charElements = textElement.querySelectorAll('.animated-char');
+
+      // Set initial state for all characters
+      gsap.set(charElements, {
+        opacity: 0,
+        filter: 'blur(25px)',
+        scale: 0.2,
+        y: 60,
+        transformOrigin: "center center"
+      });
+
+      // Create array of indices and shuffle them for random order
+      const indices = Array.from({ length: charElements.length }, (_, i) => i);
+      
+      // Fisher-Yates shuffle algorithm for truly random order
+      for (let i = indices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [indices[i], indices[j]] = [indices[j], indices[i]];
+      }
+
+      // Create timeline for the animation with ScrollTrigger
+      const textTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: nextSection.current,
+          start: "top 80%",
+          end: "top 20%",
+          toggleActions: "play none none reverse",
+          markers: false
+        }
+      });
+
+      // Animate characters in random order
+      indices.forEach((index, i) => {
+        if (text[index] === ' ') {
+          textTimeline.to(charElements[index], {
+            opacity: 1,
+            duration: 0.1
+          }, i * 0.08);
+        } else {
+          textTimeline.to(charElements[index], {
+            opacity: 1,
+            filter: 'blur(0px)',
+            scale: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power1.inOut"
+          }, i * 0.08);
+        }
+      });
+    };
+
+    // Call the text animation function
+    animateRandomText();
 
     // Animasi awal saat elemen muncul dari bawah
     gsap.fromTo(
@@ -69,11 +138,7 @@ export default function Home() {
         markers: false,
       }
     });
-    // zoomTimeline.to(jumbo.current, {
-    //   y: -100,
-    //   duration: 1,
-    //   ease: "power1.inOut",
-    // });
+
     gsap.set(pintukiri.current, {
       transformOrigin: "right center"
     });
@@ -83,24 +148,22 @@ export default function Home() {
     });
 
     zoomTimeline.to(pintukiri.current, {
-      // rotateX: 90,
       x: -95,
       opacity: 1,
       duration: 1.5,
       ease: "power2.inOut",
     });
+    
     zoomTimeline.to(pintukanan.current, {
-      // rotateX: 90,
       x: 37,
       opacity: 1,
       duration: 1.5,
       ease: "power2.inOut",
     }, "<");
 
-    // 2️⃣ Setelah itu, baru istana zoom
+    // Setelah itu, baru istana zoom
     zoomTimeline.to(istana.current, {
       scale: 20,
-      // opacity: 0,
       ease: "power2.inOut",
     });
     
@@ -116,6 +179,7 @@ export default function Home() {
       opacity: 1,
       ease: "power2.inOut",
     }, "<");
+    
     zoomTimeline.to(pintukanan.current, {
       scale: 28,
       x: 829,
@@ -135,7 +199,7 @@ export default function Home() {
       "<="
     );
 
-    // 5️⃣ Section baru muncul
+    // Section baru muncul
     gsap.fromTo(
       nextSection.current,
       { opacity: 0, scale: 1 },
@@ -164,15 +228,14 @@ export default function Home() {
       ease: "power2.out",
       scrollTrigger: {
         trigger: ".guided-section",
-        start: "top center",     // ❗ sebelum masuk layar
+        start: "top center", 
         end: "+=400vh",
         scrub: 1,
-        markers: true,
+        markers: false,
       },
     });
 
-    // 2️⃣ Spread - Saat masuk layar penuh
-    
+    // Spread - Saat masuk layar penuh
     gsap.timeline({
       scrollTrigger: {
         trigger: ".guided-section",
@@ -180,116 +243,96 @@ export default function Home() {
         end: "+=1500",
         scrub: 2,
         pin: true,
-        markers: true,
+        markers: false,
       },
     })
     .to(cards, {
       x: (i) => [-450, 0, 450, -650, 500][i],
       y: (i) => [-350, 200, -400, 150, 80][i],
       scale: () => gsap.utils.random(0.5, 1.2),
-      // scale: 1,
       rotate: 0,
       stagger: 0.2,
       ease: "power2.out",
     })
     .to(cards, {
-      y: "-=300",        // naik 300px
-      opacity: 0,        // fade out
-      stagger: 0.2,      // satu per satu
+      y: "-=300",
+      opacity: 0,
+      stagger: 0.2,
       ease: "power2.inOut",
-    }, "+=0.5");  
+    }, "+=0.5");
 
     return () => {
       smoother.kill();
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
 
   return (
-    <div ref={smoothWrapper} className="overflow-hidden relative bg-white">
-      <div ref={smoothContent} className="relative">
-        <div ref={jumbo} className="relative z-20 min-h-screen overflow-hidden">
-          <Jumbotorn
-            istana={istana}
-            masjid={masjid}
-            jembatan={jembatan}
-            balai={balai}
-            tanjak={tanjak}
-            pintu={pintu}
-            pintukiri={pintukiri}
-            pintukanan={pintukanan}
-          />
-        </div>
-        {/* <section
-          ref={nextSection}
-          className="overflow-hidden relative py-10 px-20 min-h-screen flex flex-col items-start justify-between 
-          bg-[radial-gradient(ellipse_at_top,_#F79E00_10%,_#F79E00_80%,_#FFB331_20%,_#CC8201_100%)]
-        text-white leading-none z-10 -mt-2"
-        >
-          <div className="basis-4/5 w-3/4 flex flex-col gap-5">
-            <h1 className="font-Spartam text-[#39100c] font-bold text-[72px] leading-none">
-              Kenalan dulu yuk dengan siapa kita & apa yang kita lakukan
-            </h1>
-            <h4 className="font-figtree text-[42px] text-[#39100c] font-semibold">
-              Siak bukan cuma nama di peta tapi rumah bagi ribuan cerita, sejarah, dan kebersamaan.
-            </h4>
+    <div>
+      <div ref={smoothWrapper} className="overflow-hidden relative bg-white">
+        <div ref={smoothContent} className="relative">
+          <div ref={jumbo} className="relative z-20 min-h-screen overflow-hidden">
+            <Jumbotorn
+              istana={istana}
+              masjid={masjid}
+              jembatan={jembatan}
+              balai={balai}
+              tanjak={tanjak}
+              pintu={pintu}
+              pintukiri={pintukiri}
+              pintukanan={pintukanan}
+              awan={awan}
+            />
           </div>
-          <div className="basis-3/5 w-full flex bg-[#150000] border-[#FDFABB] border-t-4 py-10 px-10 gap-5">
-            <div className="w-3/5 flex items-start justify-start">
-              <img
-                src="/image/quote.svg"
-                alt="quote"
-                width={30}
-              />
-              <div>
-                <h4 className="font-figtree text-[26px] text-[#FDFABB] font-semibold">
-                  Dari Istana Siak sampai musik Zapin yang terus mengalun, warisan budaya kami bukan hanya untuk dikenang tapi juga untuk dijalani bersama generasi baru.
-                </h4>
+
+          <section
+            ref={nextSection}
+            className="guided-section overflow-hidden relative py-10 px-20 min-h-screen flex flex-col items-start justify-between bg-[#85B55D] text-white leading-none z-10 -mt-2"
+          >
+            <h2 
+              ref={title1section} 
+              className="absolute inset-0 flex items-center justify-center z-10 font-Rammetto text-5xl text-black text-center"
+              
+            >
+              {/* Text will be dynamically inserted here */}
+            </h2>
+            
+            <div className="cards-wrapper absolute inset-0 flex items-end justify-center pointer-events-none">
+              <div className="cards-wrapper absolute inset-0 flex items-end justify-center pointer-events-none">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div
+                    key={i}
+                    className="card bg-white w-[250px] h-[350px] shadow-lg rounded-sm absolute overflow-hidden flex items-center justify-center"
+                  >
+                    <img
+                      src={`/image/wpp/bg${i}.jpg`}
+                      alt={`Gambar ${i}`}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                ))}
               </div>
             </div>
-            <div className="w-1/3 flex flex-col gap-2">
-              <h2 className="font-Spartam text-[#F79E00] font-bold text-[32px]">Komunitas yang ramah & aktif</h2>
-              <h4 className="font-figtree text-[18px] text-[#F79E00] font-medium">
-                  Dari Istana Siak sampai musik Zapin yang terus mengalun, warisan budaya kami bukan hanya untuk dikenang tapi juga untuk dijalani bersama generasi baru.
-                </h4>
-            </div>
-            <div className="w-1/3 flex flex-col gap-2">
-              <h2 className="font-Spartam text-[#F79E00] font-bold text-[32px]">Daerah yang terbuka untuk ide baru</h2>
-              <h4 className="font-figtree text-[18px] text-[#F79E00] font-medium">
-                  Di Siak, kami terbuka untuk ide, kolaborasi, dan teknologi. Mulai dari layanan publik digital sampai ruang kreatif anak muda semua bisa bertumbuh bareng.
-                </h4>
-            </div>
-          </div>
-        </section> */}
-        <section
-          ref={nextSection}
-          className="guided-section overflow-hidden relative py-10 px-20 min-h-screen flex flex-col items-start justify-between 
-          bg-[#FFFFFF]
-        text-white leading-none z-10 -mt-2"
-        >
-          <h2 ref={title1section} className="absolute inset-0 flex items-center justify-center z-10 font-funnel text-5xl text-black text-center">
-            Cerita-cerita dari Negeri Istana
-          </h2>
-          <div className="cards-wrapper absolute inset-0 flex items-end justify-center pointer-events-none">
-            <div className="cards-wrapper absolute inset-0 flex items-end justify-center pointer-events-none">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <div
-                  key={i}
-                  className="card bg-white w-[250px] h-[350px] shadow-lg rounded-sm absolute overflow-hidden flex items-center justify-center"
-                >
-                  <img
-                    src={`/image/wpp/bg${i}.jpg`}
-                    alt={`Gambar ${i}`}
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-        <section className="h-screen w-full bg-[#FFFFFF] flex items-center justify-center text-white text-center">
-          📜 About Us
-        </section>
+          </section>
+          
+          <section className="h-screen w-full bg-white flex items-center justify-center text-black text-center">
+            📜 About Us
+          </section>
+        </div>
       </div>
+
+      <style jsx global>{`
+        .animated-char {
+          display: inline-block;
+          position: relative;
+          white-space: pre;
+        }
+        
+        .animated-char:hover {
+          transform: scale(1.1);
+          transition: transform 0.2s ease;
+        }
+      `}</style>
     </div>
   );
 }
