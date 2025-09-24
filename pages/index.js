@@ -1,13 +1,10 @@
 "use client";
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollSmoother } from "gsap/ScrollSmoother";
-import Jumbotorn from "./component/jumbotorn";
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 
 export default function Home() {
+<<<<<<< HEAD
   const istana = useRef(null);
   const masjid = useRef(null);
   const jembatan = useRef(null);
@@ -22,15 +19,17 @@ export default function Home() {
   const pintukanan = useRef(null);
   const title1section = useRef(null);
   const awan = useRef(null);
+=======
+  const containerRef = useRef(null);
+  const maskRef = useRef(null);
+>>>>>>> b8332ae940f4059d357d35977c4b68935237397c
 
   useEffect(() => {
-    const smoother = ScrollSmoother.create({
-      wrapper: smoothWrapper.current,
-      content: smoothContent.current,
-      smooth: 1.5,
-      effects: true,
-    });
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const scale = 1 + scrollY / 500;
 
+<<<<<<< HEAD
     const zoomTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: jumbo.current,
@@ -264,10 +263,23 @@ export default function Home() {
     return () => {
       smoother.kill();
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+=======
+      if (maskRef.current) {
+        gsap.to(maskRef.current, {
+          scale,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      }
+>>>>>>> b8332ae940f4059d357d35977c4b68935237397c
     };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
+<<<<<<< HEAD
     <div>
       <div ref={smoothWrapper} className="overflow-hidden relative bg-white">
         <div ref={smoothContent} className="relative">
@@ -331,6 +343,45 @@ export default function Home() {
         .animated-char:hover {
           transform: scale(1.1);
           transition: transform 0.2s ease;
+=======
+    <div className="relative min-h-[200vh] bg-white">
+      {/* Content di belakang masking */}
+      <div className="fixed inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+          alt="background"
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      {/* Masking layer */}
+      <div className="fixed inset-0 z-10 flex items-center justify-center">
+        <div ref={maskRef} className="w-full h-full bg-black mask-style"></div>
+      </div>
+
+      {/* Konten scroll */}
+      <div
+        ref={containerRef}
+        className="relative z-20 w-full h-full bg-black text-black mt-[100vh] px-10 py-20"
+      >
+        <h1 className="text-5xl font-bold">Scroll to Zoom the Mask</h1>
+        <p className="mt-10 text-xl">
+          Halaman ini memiliki efek zoom menggunakan GSAP saat scroll.
+        </p>
+      </div>
+
+      <style jsx>{`
+        .mask-style {
+          -webkit-mask-image: url("/image/mask.svg");
+          mask-image: url("/image/mask.svg");
+          -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+          -webkit-mask-position: center;
+          mask-position: center;
+          -webkit-mask-size: contain;
+          mask-size: contain;
+          transition: transform 0.3s ease;
+>>>>>>> b8332ae940f4059d357d35977c4b68935237397c
         }
       `}</style>
     </div>
